@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+    <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *" />
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="css/font-awesome.min.css"  media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="css/main.css"  media="screen,projection"/>
+    <title></title>
+</head>
+
+<body>
+    <header>
+      <div class="nav-fixed">  
+        <nav>        
+          <div class="nav-wrapper #1981b9 blue darken-4">
+            <a href="primary-skills.html" style="margin: 10px 13px 0">
+              <i class="fa fa-chevron-left" style="color:white;"></i> 
+            </a>
+            <a href="#!" class="brand-logo center #1981b9 blue darken-4" style="font-size:  14px">Skills</a>
+          </div>
+        </nav>  
+      </div>
+    </header>
+    <main>
+      <form>
+      <div class="loading"></div>
+      <div class="row" id="secondary-skills" style="margin-top: 20px">
+      </div>
+      <div class="row">
+        <label style="margin-left: 10px" class="active" for="note">Note</label>
+        <div class="input-field col s12" style="padding: 0; margin: 0">
+          <textarea class="validate" rows="3" name="note" id="note"></textarea>
+        </div>
+      </div>     
+      <div class="row center">
+        <a class="btn waves-effect waves-light #1981b9 blue darken-4" name="save"><i class="fa fa-check"></i> Save</a>
+      </div>
+      </form>
+    </main>
+    <footer class="page-footer">
+      <div class="footer-copyright #1981b9 blue darken-4">
+        <div class="container">
+          <span style="color: black"></span> 
+        </div>
+      </div>
+    </footer>
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+    <script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="js/materialize.min.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
+    <!-- <script type="text/javascript" src="js/jquery.jsonify-0.3.1.min.js"></script> -->
+    <script type="text/javascript" src="controllers/secondarySkillController.js"></script>
+
+    <script type="text/javascript">
+      app.initialize();
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="format-detection" content="telephone=no" />
+  <meta name="msapplication-tap-highlight" content="no" />
+  <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+  <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+  <link type="text/css" rel="stylesheet" href="css/font-awesome.min.css"  media="screen,projection"/>
+  <link type="text/css" rel="stylesheet" href="css/main.css"  media="screen,projection"/>
+  <link type="text/css" rel="stylesheet" href="css/sweetalert.css"  media="screen,projection"/>
+  <title></title>
+  <style>
+    #map {
+      min-height: 100vh;
+      width: 100%;
+    }
+
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+    #description {
+      font-family: Roboto;
+      font-size: 15px;
+      font-weight: 300;
+    }
+
+    #infowindow-content .title {
+      font-weight: bold;
+    }
+
+    #infowindow-content {
+      display: none;
+    }
+
+    #map #infowindow-content {
+      display: inline;
+    }
+
+    .pac-card {
+      margin: 10px 10px 0 0;
+      border-radius: 2px 0 0 2px;
+      box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      outline: none;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+      background-color: #fff;
+      font-family: Roboto;
+    }
+
+    #pac-container {
+      padding-bottom: 12px;
+      margin-right: 12px;
+    }
+
+    .pac-controls {
+      display: inline-block;
+      padding: 5px 11px;
+    }
+
+    .pac-controls label {
+      font-family: Roboto;
+      font-size: 13px;
+      font-weight: 300;
+    }
+
+    #pac-input {
+      background-color: #fff;
+      font-family: Roboto;
+      font-size: 15px;
+      font-weight: 300;
+      margin-left: 12px;
+      padding: 0 11px 0 13px;
+      text-overflow: ellipsis;
+      width: 400px;
+    }
+
+    #pac-input:focus {
+      border-color: #4d90fe;
+    }
+
+    #title {
+      color: #fff;
+      background-color: #4d90fe;
+      font-size: 25px;
+      font-weight: 500;
+      padding: 6px 12px;
+    }
+    #target {
+      width: 345px;
+    }
+
+    .controls {
+      background-color: #fff;
+      border-radius: 2px;
+      border: 1px solid transparent;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+      box-sizing: border-box;
+      font-family: Roboto;
+      font-size: 15px;
+      font-weight: 300;
+      height: 29px;
+      margin-left: 17px;
+      margin-top: 10px;
+      outline: none;
+      padding: 0 11px 0 13px;
+      text-overflow: ellipsis;
+      width: 400px;
+    }
+
+    .controls:focus {
+      border-color: #4d90fe;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="nav-fixed">  
+      <nav>        
+        <div class="nav-wrapper #1981b9 blue darken-4">
+          <a href="primary-skills.html" style="margin: 10px 13px 0">
+            <i class="fa fa-chevron-left" style="color:white;"></i> 
+          </a>
+          <a href="#!" class="brand-logo center #1981b9 blue darken-4" style="font-size:  14px">Address</a>
+        </div>
+      </nav>  
+    </div>
+  </header>
+  <main>
+    <div class="loading"></div>
+    <div class="row center" style="margin: 5px;">
+      <button type="button" name="btn_save" class="col s12 btn waves-effect waves-light #1981b9 blue darken-4">Guardar</button>
+      <input id="address" class ="controls" type="text" placeholder="Ingrese su dirección" style="background-color: #fff; margin: 5px 5px 0 0">
+      <input type="hidden" name="latitude">
+      <input type="hidden" name="longitude">
+    </div> 
+    <div class="row">
+      <div id="map"></div>
+    </div>
+  </main>
+  <footer class="page-footer">
+    <div class="footer-copyright #1981b9 blue darken-4">
+      <div class="container">
+        <span style="color: black"></span> 
+      </div>
+    </div>
+  </footer>
+  <script type="text/javascript" src="cordova.js"></script>
+  <script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
+  <script type="text/javascript" src="js/materialize.min.js"></script>
+  <script type="text/javascript" src="js/main.js"></script>
+  <script type="text/javascript" src="js/sweetalert.min.js"></script>
+  <script>
+    function initMap() {
+      var client = JSON.parse(sessionStorage.getItem("client"));
+
+      var latitude = (client.latitude) ? client.latitude : 28.550194
+      var longitude = (client.longitude) ? client.longitude : -81.772499
+
+      var map = new google.maps.Map(document.getElementById('map'), {
+        center: {lat: latitude, lng: longitude},
+        zoom: 17
+      });
+
+      $("input#address").val(client.address);
+      $("input[name=latitude]").val(latitude);
+      $("input[name=longitude]").val(longitude);
+
+      var input = document.getElementById('address');
+
+      var autocomplete = new google.maps.places.Autocomplete(input);
+      autocomplete.bindTo('bounds', map);
+
+      map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+
+      //var infowindow = new google.maps.InfoWindow();
+      
+      var marker = new google.maps.Marker({
+        map: map,
+        draggable: true,
+        animation: google.maps.Animation.DROP        
+      });
+      // marker.addListener('click', function() {
+      //   infowindow.open(map, marker);
+      // });
+
+      console.log(latitude)
+      console.log(longitude)
+      var myLatlng = new google.maps.LatLng(latitude, longitude);
+      var marker = new google.maps.Marker({
+          position: myLatlng
+      });
+      // To add the marker to the map, call setMap();
+      marker.setMap(map);
+
+      autocomplete.addListener('place_changed', function() {
+        //infowindow.close();
+        var place = autocomplete.getPlace();
+        if (!place.geometry) {          
+          return;
+        }
+
+        if (place.geometry.viewport) {
+          map.fitBounds(place.geometry.viewport);
+        } else {
+          map.setCenter(place.geometry.location);
+          map.setZoom(17);
+        }
+
+        // Set the position of the marker using the place ID and location.
+        marker.setPlace({
+          placeId: place.place_id,
+          location: place.geometry.location
+        });
+        marker.setVisible(true);
+        console.log(autocomplete.getPlace().geometry.location.lat() )
+        console.log(autocomplete.getPlace().geometry.location.lng() )
+
+        $("input[name=latitude]").val(autocomplete.getPlace().geometry.location.lat());
+        $("input[name=longitude]").val(autocomplete.getPlace().geometry.location.lng());
+      });
+    }
+
+  </script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB2yTTiZwsvE0e-H2Iwz_TAO_bOt8FvvD4&libraries=places&callback=initMap"
+       async defer></script>
+  </script>
+  <script type="text/javascript" src="controllers/addressController.js"></script>
+</body>
+
+</html>

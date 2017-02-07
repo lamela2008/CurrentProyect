@@ -1,0 +1,29 @@
+{
+    "prepare_queue": {
+        "installed": [],
+        "uninstalled": []
+    },
+    "config_munge": {
+        "files": {}
+    },
+    "installed_plugins": {
+        "cordova-plugin-console": {
+            "PACKAGE_NAME": "com.wines.seller.android.app"
+        },
+        "cordova-plugin-dialogs": {
+            "PACKAGE_NAME": "com.wines.seller.android.app"
+        },
+        "cordova-plugin-statusbar": {
+            "PACKAGE_NAME": "com.wines.seller.android.app"
+        },
+        "phonegap-plugin-push": {
+            "SENDER_ID": "XXXXXXX",
+            "PACKAGE_NAME": "com.wines.seller.android.app"
+        }
+    },
+    "dependent_plugins": {
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "com.wines.seller.android.app"
+        }
+    }
+}
